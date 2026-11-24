@@ -2,6 +2,10 @@
 
 Deadline: **24 November 2026, 11:59 PM IST**. The files in this pack are local deliverables; they are not an event submission.
 
+Submit all three links by the deadline: the PPT, the video pitch and the GitHub repository for the proposed solution. Keep improving the code in that same repository through your Ideation Day slot on **26 or 27 November**. The organisers will review the repository on Ideation Day and expect a basic working demonstration of the core idea. ReThread already has a working prototype to publish. [Official clarification](https://whackiest-2026.vercel.app/announcements)
+
+In the presentation, start with the problem and why the approach fits. Use the demo to show one successful recovery and one case where the tool asks the user to review a conflict. The organisers give priority to problem understanding, reasoning and presentation. [Official evaluation focus](https://whackiest-2026.vercel.app/announcements)
+
 ## Official material
 
 - [Event site and tracks](https://whackiest-2026.vercel.app/#tracks)

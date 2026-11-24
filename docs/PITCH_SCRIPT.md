@@ -30,7 +30,7 @@ We also tested a real calendar server, Radicale, using fictional appointments. A
 
 We then changed the event after its recovery preview. The old preview was rejected. The final write also uses the calendar server’s version precondition, so a concurrent edit cannot silently be replaced after the check.
 
-The saved evidence records the actual remote results. This adapter supports a deliberately limited event type. We do not claim to undo invitations, sent messages, payments or consequences that have already reached other people.
+We started with private calendar edits because the calendar itself can reject an update when someone has changed the event in the meantime. That gives us a clear way to check whether recovery preserved the user's work. The saved test results show what happened to the fictional event.
 
 ## 2:50–3:30 · Existing work and our contribution
 
@@ -40,7 +40,7 @@ Our proposed contribution is an inspectable MCP recovery workflow that checks fi
 
 ## 3:30–4:05 · Feasibility and closing
 
-The current build passes 32 automated tests, plus the separate real-calendar verification. Our seven-family comparison reports recovery and deferral separately. No user-impact numbers have been invented.
+Our current prototype passes 32 automated tests. The case to remember is the interview: the meeting goes back to its original time and your entrance note stays. If you changed the time yourself, the tool leaves your choice in place and explains the conflict.
 
 For the four-person build, we divide recovery logic, external adapters, the user interface, and independent evaluation. We will focus on two well-supported tools rather than promise every application.
 
