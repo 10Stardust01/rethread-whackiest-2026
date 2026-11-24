@@ -33,7 +33,7 @@ Concrete remaining action: upload the completed and renamed PPTX to Google Drive
 
 ## Video
 
-The event requires a **3–5 minute public or unlisted YouTube explanation video**. The finished 4:19 pitch accompanies the submission materials.
+The event requires a **3–5 minute public or unlisted YouTube explanation video**. The revised pitch accompanies the submission materials.
 
 ## Event form and public demo
 
