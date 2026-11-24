@@ -15,6 +15,7 @@ test('events with attendees, recurrence or alarms are refused',()=>{
  for(const extra of ['ATTENDEE:mailto:person@example.invalid','RRULE:FREQ=DAILY','BEGIN:VALARM\r\nACTION:DISPLAY\r\nEND:VALARM','DTEND;TZID=Asia/Kolkata:20261125T110000'])assert.throws(()=>inspectCalendar(fixture().replace('END:VEVENT',extra+'\r\nEND:VEVENT')));
 });
 test('live adapter refuses non-loopback destinations and unsafe capture identities',async()=>{
+ assert.throws(()=>patchCalendar(fixture(),JSON.parse('{"constructor":"x"}')),/Unsupported/);
  assert.throws(()=>new CalDavRecovery({url:'https://outside.example/event.ics',directory:'unused'}));
  const c=new CalDavRecovery({url:'http://127.0.0.1:5237/a.ics',directory:'unused'});await assert.rejects(()=>c.load('../state.json'),/identity/);
 });

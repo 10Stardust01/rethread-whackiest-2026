@@ -26,7 +26,7 @@ export function inspectCalendar(text){
 export function patchCalendar(text,patch){
  const parsed=inspectCalendar(text),lines=parsed.text.split('\n').filter(Boolean);
  for(const [name,value]of Object.entries(patch)){
-  if(!(name in properties)||typeof value!=='string'||value.length>10000)throw Error('Unsupported calendar field');
+  if(!Object.hasOwn(properties,name)||typeof value!=='string'||value.length>10000)throw Error('Unsupported calendar field');
   const property=properties[name];
   let line;
   if(name==='start'){

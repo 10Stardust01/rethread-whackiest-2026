@@ -22,6 +22,7 @@ test('loading a new example cannot reuse a previously reviewed revision',()=>tem
 }));
 test('MCP tool call refuses extra properties and hides no errors',()=>temporary(async dir=>{
  const s=new Store(dir),reply=await rpc(s,{jsonrpc:'2.0',id:1,method:'tools/call',params:{name:'edit_record',arguments:{run:'a',resource:'notes:travel',expectedRevision:0,actor:'human',patch:{budget:1}}}});assert.equal(reply.result.isError,true);assert.equal((await s.read()).revision,0);
+ const inherited=await rpc(s,{jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'read_workspace',arguments:JSON.parse('{"constructor":"x"}')}});assert.equal(inherited.result.isError,true);
 }));
 test('actual stdio subprocess edits, previews and restores persisted data',()=>temporary(async dir=>{
  const messages=[

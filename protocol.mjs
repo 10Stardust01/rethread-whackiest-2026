@@ -15,7 +15,7 @@ export async function callTool(store,name,args={}){
  if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Arguments must be an object');
  const tool=toolsList.find(t=>t.name===name);if(!tool)throw Error('Unknown tool');
  const schema=tool.inputSchema;
- if(Object.keys(args).some(k=>!(k in schema.properties)))throw Error('Unexpected argument');
+ if(Object.keys(args).some(k=>!Object.hasOwn(schema.properties,k)))throw Error('Unexpected argument');
  for(const field of schema.required??[])if(!(field in args))throw Error('Missing '+field);
  if(args.expand!==undefined&&typeof args.expand!=='boolean')throw Error('expand must be boolean');
  if(name.startsWith('caldav_')){
