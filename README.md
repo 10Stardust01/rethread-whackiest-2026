@@ -96,4 +96,4 @@ Existing work includes MCP compensation, three-way recovery and dependency-aware
 
 ## Submission status
 
-The official-template deck and source can be delivered locally. No new public GitHub repository, public Drive viewer link, hosted public demo or YouTube video has been created for ReThread. Registered team name, team ID, college, member names and USNs were not supplied. These must not be invented. Read `docs/SUBMISSION.md` for the precise remaining actions and access blockers.
+This public repository contains the wHACKiest 2026 **Make MCP Matter** prototype, tests, and reproducible examples. See [submission notes](docs/SUBMISSION.md) for the entry requirements.

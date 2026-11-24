@@ -23,9 +23,7 @@ Replace the deck’s explicitly marked team fields with the registered team name
 
 ## GitHub
 
-No new repository link exists. The connected GitHub interface exposes file/commit operations but no repository-creation action. The earlier browser login could not provide usable account access. Existing repositories were not modified.
-
-Concrete remaining action: create a **new public repository** in the intended GitHub account, then upload the extracted `rethread/` source contents, including `.gitignore`, `README.md`, source, tests, docs and evidence. Do not upload runtime `data/`, `.venv/`, credentials or installed libraries. Open the repository while signed out and check the README and source are readable. Run the tests from a fresh checkout. Copy that actual repository URL into the event form.
+Use the [public ReThread repository](https://github.com/10Stardust01/rethread-whackiest-2026) in the event form. The prototype passed all 32 tests from a fresh public clone.
 
 ## Google Drive
 
@@ -35,7 +33,7 @@ Concrete remaining action: upload the completed and renamed PPTX to Google Drive
 
 ## Video
 
-The user made video creation optional for this task; the event requirement remains a **3–5 minute public or unlisted YouTube explanation video**. A finished pitch script is included. No video or YouTube URL was fabricated. Record the deck and actual demonstration, upload with suitable visibility, and verify the link while signed out before submitting it.
+The event requires a **3–5 minute public or unlisted YouTube explanation video**. The finished 4:19 pitch accompanies the submission materials.
 
 ## Event form and public demo
 

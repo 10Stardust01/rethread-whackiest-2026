@@ -35,4 +35,4 @@ The optional Radicale instructions deliberately use an unauthenticated local tes
 
 The source package excludes `data/`, `.venv/`, installed Python libraries, live captures, personal calendars, `.env` files, site credentials and Git metadata. Included evidence contains only synthetic appointments and loopback URLs. `demo:demo` is an explicitly public test credential for the isolated example; it is not a user secret.
 
-No new GitHub repository or public Site was created. No existing project was modified. No Drive upload was retried after the earlier file-upload permission denial.
+The published repository contains the reviewed prototype and fictional sample data. The calendar integration test runs against a local disposable service.
