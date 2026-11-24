@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-11-24T13:01:56.567Z",
+  "transport": "Actual MCP stdio subprocess -> real CalDAV HTTP -> Radicale persisted event",
+  "results": {
+    "initialized": true,
+    "calendarChanged": true,
+    "staleRecoveryRefused": true,
+    "priorTimeRestored": true,
+    "independentNotePreserved": true,
+    "finalRemoteETagVerified": true
+  },
+  "scope": "One supported non-recurring fictional event. No browser UI, cross-tool transaction or production-safety claim."
+}

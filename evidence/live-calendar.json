@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-11-24T12:59:44.411Z",
+  "server": "Radicale 3.9.2",
+  "url": "http://127.0.0.1:5237/demo/rethread-1795525177597/interview.ics",
+  "results": {
+    "calendarCreated": 201,
+    "eventCreated": 201,
+    "agentTimeRestored": true,
+    "laterIndependentNotePreserved": true,
+    "stalePreviewRefused": true,
+    "serverIfMatchRefusedStaleWrite": true,
+    "overlappingTimeChangeBlocked": true
+  },
+  "scope": "Real CalDAV HTTP requests with fictional data, one non-recurring Asia/Kolkata event. No browser UI or universal recovery claim. External ABA histories cannot be reconstructed from an ETag and current values."
+}

@@ -1,0 +1,133 @@
+{
+  "generatedAt": "2026-11-24T13:18:01.106Z",
+  "scope": "7 hand-authored scenario families, 21 deterministic reference-method observations. Not a competitor benchmark, user study, or novel-algorithm claim.",
+  "important": "Deferral preserves state but does not complete recovery. Expectations include deferral where changing state would invalidate dependent work.",
+  "observations": [
+    {
+      "scenario": "Independent later human field",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Independent later human field",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Independent later human field",
+      "method": "ReThread narrow scope",
+      "outcome": "applied",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Overlapping human field",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Overlapping human field",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Overlapping human field",
+      "method": "ReThread narrow scope",
+      "outcome": "deferred",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Cross-tool dependent agent",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Cross-tool dependent agent",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Cross-tool dependent agent",
+      "method": "ReThread narrow scope",
+      "outcome": "deferred",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Human content inside agent-created record",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Human content inside agent-created record",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Human content inside agent-created record",
+      "method": "ReThread narrow scope",
+      "outcome": "deferred",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Unrelated later agent run",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Unrelated later agent run",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Unrelated later agent run",
+      "method": "ReThread narrow scope",
+      "outcome": "applied",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "Human read depends on an agent effect",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Human read depends on an agent effect",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": false
+    },
+    {
+      "scenario": "Human read depends on an agent effect",
+      "method": "ReThread narrow scope",
+      "outcome": "deferred",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "No later work",
+      "method": "Whole-state snapshot",
+      "outcome": "applied",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "No later work",
+      "method": "Field merge only",
+      "outcome": "attempted",
+      "meetsScenarioExpectation": true
+    },
+    {
+      "scenario": "No later work",
+      "method": "ReThread narrow scope",
+      "outcome": "applied",
+      "meetsScenarioExpectation": true
+    }
+  ]
+}

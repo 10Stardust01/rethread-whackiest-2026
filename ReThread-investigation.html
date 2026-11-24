@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ReThread · Investigation</title><style>
+:root{color-scheme:light;--ink:#173332;--muted:#5c706d;--line:#d7e3dd;--green:#166a50;--sand:#f5f3e9;--red:#a33630}*{box-sizing:border-box}body{margin:0;background:var(--sand);color:var(--ink);font:16px/1.5 system-ui,sans-serif}header{background:#173332;color:#fff;padding:24px max(5vw,20px);display:flex;justify-content:space-between;gap:20px;align-items:center}.brand{font-size:24px;font-weight:750;letter-spacing:-1px}.badge{font-size:12px;border:1px solid #5b8176;border-radius:30px;padding:6px 12px}main{max-width:1240px;margin:0 auto;padding:40px 24px}h1{font-size:clamp(30px,4vw,50px);letter-spacing:-1.5px;line-height:1.1;max-width:800px;margin:0 0 18px}h2{font-size:20px;letter-spacing:-.5px;margin:0 0 15px}h3{font-size:16px;margin:0 0 10px}p{margin:0 0 18px}.intro{max-width:780px;color:var(--muted);font-size:18px}.grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,1fr);gap:24px;margin-top:28px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}button,select,input{font:inherit}button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 14px;border-radius:10px;cursor:pointer}button.primary{background:var(--green);border-color:var(--green);color:#fff}button:disabled{opacity:.45;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #d69220;outline-offset:2px}select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:#fff}.record{border-top:1px solid var(--line);padding:17px 0}.record:last-child{padding-bottom:0}dl{margin:0;display:grid;grid-template-columns:80px 1fr;gap:5px 12px}dt{color:var(--muted);font-size:14px}dd{margin:0;overflow-wrap:anywhere}.tag{font-size:12px;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:1px}.status{border-radius:10px;padding:14px;background:#edf6f0;margin:15px 0}.status.block{background:#fff0e9;color:#82392d}.small{font-size:13px;color:var(--muted)}.event{border-left:2px solid var(--line);padding:0 0 14px 15px;margin-left:4px}.event.inactive{opacity:.5}#notice{min-height:28px;font-weight:600}label{display:block;margin-top:14px}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}.bottom{margin-top:24px}.links a{color:var(--green)}footer{margin-top:26px;color:var(--muted);font-size:13px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}summary{cursor:pointer}.step{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}@media(max-width:800px){.grid{grid-template-columns:1fr}header{padding:20px}main{padding:28px 16px}.card{padding:20px}table{font-size:12px}td,th{padding:7px}}
+</style></head><body><header><div class="brand">ReThread<span style="color:#91b8a4">.</span></div><div class="badge">CANDIDATE INVESTIGATION · LOCAL DEMO</div></header><main><div class="tag">When an assistant gets it wrong</div><h1>Take back its changes.<br>Keep your later work.</h1><p class="intro">Try a small, inspectable recovery engine. It restores the selected fields, preserves unrelated edits, and stops when a later choice depends on what you want to undo.</p><p id="mode-note" class="small">Portable mode: fictional records are saved only in this browser. No external account, message or payment is connected.</p><div class="grid"><section class="card"><div class="step">01 · Choose an example</div><label for="scenario" class="small">Scenario</label><select id="scenario"><option value="independent">You edit a note after the AI moves your interview</option><option value="overlap">You choose a different interview time afterward</option><option value="dependent">Another AI action uses the changed interview time</option><option value="human">Your own travel plan depends on the changed time</option><option value="created">You add work inside a record the AI created</option></select><div class="actions"><button id="load" class="primary">Load example</button><button id="reset">Reset records</button></div><div class="step" style="margin-top:25px">02 · Inspect the current records</div><div id="records"></div><div class="actions"><button id="export-calendar">Save calendar</button><button id="export-tasks">Save task list</button><button id="export-notes">Save notes</button></div></section><section class="card"><div class="step">03 · Review the recovery</div><h2>Undo the first AI run</h2><div id="timeline"></div><label class="small"><input id="expand" type="checkbox"> Include later dependent AI runs in the preview</label><div class="actions"><button id="preview">Preview undo</button><button id="apply" class="primary" disabled>Apply reviewed undo</button></div><div id="notice" role="status" aria-live="polite"></div><div id="plan"></div></section></div><section class="card bottom"><h2>Why an old snapshot is not always enough</h2><p class="small">Reference strategies run on the same example, independently. These are transparent local implementations, not tests of installed competitor products.</p><div style="overflow:auto"><table><thead><tr><th>Strategy</th><th>What happens in this example</th></tr></thead><tbody id="comparison"></tbody></table></div></section><section class="card bottom links"><h2>What this investigation does—and does not—establish</h2><p>Existing work already covers agent undo, selective merging and dependency-aware rollback. This prototype helps examine their interaction; it does not establish a new algorithm or a winning-worthy difference.</p><p class="small">Supported: flat structured records, declared read dependencies, known writers, explicit preview, deterministic restoration. Not supported: arbitrary third-party apps, inferred causal relationships, unknown external writers, distributed transactions, sent messages or payments. A pause preserves the current record; it is not a completed recovery.</p><p class="small"><a href="https://github.com/mohithhhh/mcp-compensator">mcp-compensator</a> · <a href="https://arxiv.org/html/2611.22075">Reversibility Classes research</a> · <a href="https://pypi.org/project/agents-driftguard/">DriftGuard</a></p><details><summary>Inspect the actual state and recorded dependencies</summary><pre id="raw"></pre></details></section><footer>All people, appointments and records in these examples are fictional. Generated for wHACKiest research, 24 November 2026.</footer></main><script type="module">
+// A deliberately bounded reference implementation: structured local records only.
+// The planner never asks an LLM to infer an inverse or decide an overlap.
+const clone = value => structuredClone(value);
+const equal = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+const own = (o,k) => Object.prototype.hasOwnProperty.call(o,k);
+const key = (r,f) => `${r}::${f}`;
+const valid = s => typeof s==='string' && /^[a-zA-Z0-9_.:-]{1,100}$/.test(s) && !['__proto__','constructor','prototype'].includes(s);
+function initialState(){return {revision:0,nextId:1,records:{},events:[],versions:{}};}
+function change(state,{run,actor='agent',resource,patch,reads=[],kind='update'}){
+  if(!valid(run)||!valid(resource)||!['agent','human'].includes(actor))throw Error('Invalid change identity');
+  if(!['create','update','delete'].includes(kind))throw Error('Unsupported effect. No inverse is inferred.');
+  if(!Array.isArray(reads)||reads.length>100)throw Error('Invalid read set');
+  const current=state.records[resource];
+  if(kind==='create'&&current!==undefined)throw Error('Record already exists');
+  if(kind!=='create'&&current===undefined)throw Error('Record is missing');
+  if(kind!=='delete'&&(!patch||Array.isArray(patch)||typeof patch!=='object'||Object.keys(patch).length>30))throw Error('Invalid patch');
+  if(kind!=='delete')for(const [f,v] of Object.entries(patch)){
+    if(!valid(f)||!(v===null||typeof v==='string'||typeof v==='boolean'||(typeof v==='number'&&Number.isFinite(v))))throw Error('Only flat scalar fields are supported');
+    if(typeof v==='string'&&v.length>10000)throw Error('Field too large');
+  }
+  const dependencies=new Set();
+  for(const read of reads){
+    if(!read||!valid(read.resource)||!valid(read.field))throw Error('Invalid read reference');
+    const last=[...state.events].reverse().find(e=>e.active&&e.resource===read.resource&&(e.kind!=='update'||own(e.after,read.field)));
+    if(last)dependencies.add(last.id);
+  }
+  // A write depends on the last active writer of every overwritten field.
+  const fields=kind==='delete'?Object.keys(current):Object.keys(patch);
+  for(const f of fields){const last=[...state.events].reverse().find(e=>e.active&&e.resource===resource&&(e.kind!=='update'||own(e.after,f)));if(last)dependencies.add(last.id);}
+  const before=kind==='create'?null:kind==='delete'?clone(current):Object.fromEntries(fields.map(f=>[f,own(current,f)?{present:true,value:current[f]}:{present:false}]));
+  const after=kind==='delete'?null:clone(patch);
+  const event={id:`e${state.nextId++}`,run,actor,resource,kind,before,after,dependencies:[...dependencies],active:true,sequence:state.events.length};
+  if(kind==='delete')delete state.records[resource];
+  else state.records[resource]=kind==='create'?clone(patch):{...current,...clone(patch)};
+  for(const f of fields)state.versions[key(resource,f)]=event.id;
+  state.revision++;state.events.push(event);return event;
+}
+function planUndo(state,run,{expand=false}={}){
+  if(!valid(run))throw Error('Invalid run');
+  const selected=new Set(state.events.filter(e=>e.active&&e.actor==='agent'&&e.run===run).map(e=>e.id));
+  const dependencies=[];
+  let changed=true;
+  while(changed){changed=false;for(const e of state.events){
+    if(!e.active||selected.has(e.id)||!e.dependencies.some(id=>selected.has(id)))continue;
+    if(e.actor==='human'||!expand){if(!dependencies.some(d=>d.id===e.id))dependencies.push({id:e.id,run:e.run,actor:e.actor,resource:e.resource,reason:'A later action depends on a selected effect.'});}
+    else {selected.add(e.id);changed=true;}
+  }}
+  const working=clone(state.records),steps=[],conflicts=[];
+  for(const e of [...state.events].reverse().filter(e=>selected.has(e.id))){
+    const current=working[e.resource];
+    if(e.kind==='create'){
+      if(!equal(current,e.after)){conflicts.push({event:e.id,resource:e.resource,field:'whole record',reason:'The created record was changed or removed later.'});continue;}
+      delete working[e.resource];steps.push({event:e.id,resource:e.resource,kind:'delete',preserved:[]});
+    }else if(e.kind==='delete'){
+      if(current!==undefined){conflicts.push({event:e.id,resource:e.resource,field:'whole record',reason:'A record now occupies the original identity.'});continue;}
+      working[e.resource]=clone(e.before);steps.push({event:e.id,resource:e.resource,kind:'restore',preserved:[]});
+    }else {
+      if(!current){conflicts.push({event:e.id,resource:e.resource,field:'whole record',reason:'The record is missing.'});continue;}
+      const overlap=Object.keys(e.after).filter(f=>!own(current,f)||!equal(current[f],e.after[f]));
+      // A known later writer on this field is an overlap even if the value changed back (ABA).
+      for(const f of Object.keys(e.after)){
+        const writer=state.versions[key(e.resource,f)];
+        if(writer&&writer!==e.id&&!selected.has(writer)&&!overlap.includes(f))overlap.push(f);
+      }
+      if(overlap.length){for(const f of overlap)conflicts.push({event:e.id,resource:e.resource,field:f,reason:'A later writer owns a field this undo would replace.'});continue;}
+      const preserved=Object.keys(current).filter(f=>!own(e.after,f));
+      for(const [f,old] of Object.entries(e.before)){if(old.present)current[f]=clone(old.value);else delete current[f];}
+      steps.push({event:e.id,resource:e.resource,kind:'restore fields',fields:Object.keys(e.after),preserved});
+    }
+  }
+  return {run,revision:state.revision,expand,selected:[...selected],includedRuns:[...new Set(state.events.filter(e=>selected.has(e.id)).map(e=>e.run))],dependencies,conflicts,steps,canApply:selected.size>0&&dependencies.length===0&&conflicts.length===0,result:working};
+}
+function applyUndo(state,plan){
+  if(state.revision!==plan.revision)throw Error('State changed after preview. Review a fresh plan.');
+  // Recompute instead of trusting a caller-supplied result or canApply flag.
+  const fresh=planUndo(state,plan.run,{expand:plan.expand});
+  if(!fresh.canApply)throw Error('Undo is blocked. No state was changed.');
+  state.records=clone(fresh.result);
+  for(const e of state.events)if(fresh.selected.includes(e.id))e.active=false;
+  state.revision++;
+  state.events.push({id:`e${state.nextId++}`,run:`undo:${plan.run}`,actor:'system',kind:'undo',resource:'ledger',selected:fresh.selected,active:false,sequence:state.events.length});
+  // Retain the last active owner, including known later human edits.
+  state.versions={};
+  for(const e of state.events.filter(e=>e.active))for(const f of Object.keys(e.after??e.before??{}))state.versions[key(e.resource,f)]=e.id;
+  return {undone:fresh.selected,preservedRecords:clone(state.records),revision:state.revision};
+}
+function seed(){
+  const state=initialState();
+  state.records={
+    'calendar:interview':{title:'Interview',start:'2026-11-25T10:00',location:'Office',notes:'Bring portfolio'},
+    'tasks:prepare':{title:'Prepare portfolio',due:'2026-11-24',done:false},
+    'notes:travel':{title:'Travel plan',route:'Metro',budget:120}
+  };return state;
+}
+
+const icsText=v=>String(v??'').replaceAll('\\','\\\\').replace(/\r?\n/g,'\\n').replaceAll(';','\\;').replaceAll(',','\\,');
+const fold=line=>{let out='',width=0;for(const char of line){const bytes=new TextEncoder().encode(char).length;if(width+bytes>73){out+='\r\n ';width=1;}out+=char;width+=bytes;}return out;};
+function calendarICS(records){
+ const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//ReThread//Local Reference Workspace//EN','CALSCALE:GREGORIAN'];
+ for(const [id,r]of Object.entries(records).filter(([id])=>id.startsWith('calendar:'))){
+  if(!/^\d{4}-\d\d-\d\dT\d\d:\d\d$/.test(r.start??''))throw Error('Calendar start must use YYYY-MM-DDTHH:MM');
+  lines.push('BEGIN:VEVENT','UID:'+icsText(id)+'@rethread.local','DTSTAMP:20261124T000000Z','DTSTART;TZID=Asia/Kolkata:'+r.start.replace(/[-:]/g,'')+'00','SUMMARY:'+icsText(r.title),'LOCATION:'+icsText(r.location),'DESCRIPTION:'+icsText(r.notes),'END:VEVENT');
+ }lines.push('END:VCALENDAR');return lines.map(fold).join('\r\n')+'\r\n';
+}
+const csvCell=v=>{let s=String(v??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';};
+function tasksCSV(records){return [['id','title','due','done'],...Object.entries(records).filter(([id])=>id.startsWith('tasks:')).map(([id,r])=>[id,r.title,r.due,r.done])].map(row=>row.map(csvCell).join(',')).join('\r\n')+'\r\n';}
+const md=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replace(/[\\`*_{}\[\]()#+.!|]/g,'\\$&');
+function notesMarkdown(records){return Object.entries(records).filter(([id])=>id.startsWith('notes:')).map(([id,r])=>'# '+md(r.title??id)+'\n\n'+Object.entries(r).filter(([f])=>f!=='title').map(([f,v])=>'- **'+md(f)+'**: '+md(v)).join('\n')).join('\n\n')+'\n';}
+
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const remote=/^https?:$/.test(location.protocol)&&Boolean(location.port);
+let state=seed(),original=seed(),plan=null,token='';
+async function api(route,body){const response=await fetch('/api/'+route,{method:body?'POST':'GET',headers:body?{'content-type':'application/json','x-rethread-token':token}:{},body:body?JSON.stringify(body):undefined});const value=await response.json();if(!response.ok)throw Error(value.error??'Request failed');return value;}
+function save(){if(!remote)try{localStorage.setItem('rethread-investigation',JSON.stringify({state,original}));}catch{}}
+function render(){
+ $('records').innerHTML=Object.entries(state.records).map(([id,r])=>`<article class="record"><h3>${esc(id)}</h3><dl>${Object.entries(r).map(([f,v])=>`<dt>${esc(f)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></article>`).join('');
+ $('timeline').innerHTML=state.events.map(e=>`<div class="event ${e.active?'':'inactive'}"><span class="tag">${esc(e.actor)} · ${esc(e.run)}</span><div>${esc(e.resource)} · ${esc(e.kind)}</div><div class="small">${e.dependencies?.length?'Uses '+e.dependencies.map(esc).join(', '):'No recorded earlier dependency'}${e.active?'':' · undone / ledger entry'}</div></div>`).join('')||'<p class="small">Load an example to create the AI and human edits.</p>';
+ $('raw').textContent=JSON.stringify(state,null,2);save();compare();
+}
+function invalidate(message=''){plan=null;$('apply').disabled=true;$('plan').innerHTML='';$('notice').textContent=message;}
+async function load(scenario=$('scenario').value){
+ original=seed();
+ if(remote)state=(await api('example',{scenario})).state;
+ else {
+  const revision=state.revision+1;state=seed();state.revision=revision;
+  const a=(resource,patch,extra={})=>change(state,{run:'a',resource,patch,...extra});
+  if(scenario==='created'){a('tasks:new',{title:'AI draft task'},{kind:'create'});a('tasks:new',{notes:'My later work must survive'},{run:'me',actor:'human'});}
+  else if(scenario!=='reset'){a('calendar:interview',{start:'2026-11-25T14:00'});switch(scenario){
+   case'independent':a('calendar:interview',{notes:'My later note: use the accessible entrance'},{run:'me',actor:'human'});break;
+   case'overlap':a('calendar:interview',{start:'2026-11-25T15:00'},{run:'me',actor:'human'});break;
+   case'dependent':a('notes:travel',{route:'Taxi for the 14:00 interview'},{run:'b',reads:[{resource:'calendar:interview',field:'start'}]});a('calendar:interview',{notes:'My later note: bring printed portfolio'},{run:'me',actor:'human'});break;
+   case'human':a('notes:travel',{route:'My travel plan for 14:00'},{run:'me',actor:'human',reads:[{resource:'calendar:interview',field:'start'}]});break;
+  }}
+ }
+ $('expand').checked=false;invalidate(scenario==='reset'?'Records reset.':'Example loaded. Nothing has been undone.');render();
+}
+function compare(){const snapshot=clone(original.records),p=planUndo(state,'a',{expand:$('expand').checked});let merge=clone(state.records);
+ for(const e of [...state.events].reverse().filter(e=>e.active&&e.run==='a')){const r=merge[e.resource];if(e.kind==='create'){if(equal(r,e.after))delete merge[e.resource];continue;}if(e.kind==='update')for(const [f,v]of Object.entries(e.after))if(r&&equal(r[f],v)){if(e.before[f].present)r[f]=e.before[f].value;else delete r[f];}}
+ const brief=r=>(r['calendar:interview']?.start??'No interview')+' · '+(r['calendar:interview']?.notes??'')+' · '+(r['notes:travel']?.route??'')+(r['tasks:new']?' · new task retained':'');
+ $('comparison').innerHTML=[['Whole-state snapshot',brief(snapshot)],['Field merge only',brief(merge)],['ReThread preview',p.canApply?brief(p.result):p.selected.length?'Stops: '+[...p.dependencies.map(x=>x.reason),...p.conflicts.map(x=>x.reason)].filter((x,i,a)=>a.indexOf(x)===i).join(' '):'No active effects in this run.']].map(([a,b])=>`<tr><th>${esc(a)}</th><td>${esc(b)}</td></tr>`).join('');
+}
+async function preview(){
+ if(remote)state=(await api('state')).state;
+ plan=remote?(await api('preview',{run:'a',expand:$('expand').checked})).plan:planUndo(state,'a',{expand:$('expand').checked});
+ $('apply').disabled=!plan.canApply;$('notice').textContent='Preview only. Current records are unchanged.';
+ $('plan').innerHTML=`<div class="status ${plan.canApply?'':'block'}"><strong>${plan.canApply?'Ready for your review':'No changes will be applied'}</strong><div>${plan.selected.length} selected effects · runs ${plan.includedRuns.map(esc).join(', ')||'none'}</div></div>`+plan.dependencies.map(d=>`<p class="small">${esc(d.actor)} run ${esc(d.run)} uses the earlier change. ${d.actor==='human'?'Your work will not be undone automatically.':'Broaden the preview to include it, or leave everything unchanged.'}</p>`).join('')+plan.conflicts.map(c=>`<p class="small">Conflict: ${esc(c.resource)} / ${esc(c.field)}. ${esc(c.reason)}</p>`).join('')+plan.steps.map(s=>`<p class="small">${esc(s.kind)} · ${esc(s.resource)}${s.preserved.length?' · preserves '+s.preserved.map(esc).join(', '):''}</p>`).join('');render();
+}
+async function apply(){
+ if(!plan)return;
+ let result;
+ if(remote){const value=await api('undo',{run:plan.run,expand:plan.expand,expectedRevision:plan.revision});state=value.state;result=value.result;}
+ else result=applyUndo(state,plan);
+ invalidate(`Undid ${result.undone.length} recorded effects. Inspect the remaining records.`);render();
+}
+const guard=fn=>async()=>{try{await fn();}catch(e){invalidate(e.message);}};
+$('load').onclick=guard(()=>load());$('reset').onclick=guard(()=>load('reset'));
+$('preview').onclick=guard(preview);$('apply').onclick=guard(apply);
+$('expand').onchange=()=>{invalidate('Scope changed. Preview again.');compare();};
+function download(name,text,type){const url=URL.createObjectURL(new Blob([text],{type})),link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('export-calendar').onclick=guard(()=>download('ReThread-calendar.ics',calendarICS(state.records),'text/calendar'));
+$('export-tasks').onclick=guard(()=>download('ReThread-tasks.csv',tasksCSV(state.records),'text/csv'));
+$('export-notes').onclick=guard(()=>download('ReThread-notes.md',notesMarkdown(state.records),'text/markdown'));
+try{
+ if(remote){const value=await api('state');token=value.token;state=value.state;$('mode-note').textContent='Local server mode: these reference records are saved on this computer and shared with the included MCP server. No external account, message or payment is connected.';render();}
+ else{const stored=JSON.parse(localStorage.getItem('rethread-investigation'));if(stored?.state?.revision>=0&&stored.original){state=stored.state;original=stored.original;render();}else await load();}
+}catch(e){if(remote)invalidate(e.message);else await load();}
+
+</script></body></html>

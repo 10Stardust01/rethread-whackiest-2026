@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';
+const engine=await fs.readFile(new URL('engine.mjs',import.meta.url),'utf8');
+let html=await fs.readFile(new URL('demo-template.html',import.meta.url),'utf8');
+const ui=await fs.readFile(new URL('ui.mjs',import.meta.url),'utf8');
+const exportsCode=await fs.readFile(new URL('exports.mjs',import.meta.url),'utf8');
+html=html.slice(0,html.indexOf('/* ENGINE */'))+engine.replaceAll('export ','')+'\n'+exportsCode.replaceAll('export ','')+'\n'+ui+'\n</script></body></html>';
+html=html.replace('<p class="small">This is a research spike, not a selected hackathon entry. Structured demo records stay in this browser. No external account, AI model, message or payment is connected.</p>','<p id="mode-note" class="small">Portable mode: fictional records are saved only in this browser. No external account, message or payment is connected.</p>');
+html=html.replace('<div id="records"></div>','<div id="records"></div><div class="actions"><button id="export-calendar">Save calendar</button><button id="export-tasks">Save task list</button><button id="export-notes">Save notes</button></div>');
+await fs.writeFile(new URL('ReThread-investigation.html',import.meta.url),html);
+console.log('Built self-contained investigation demo from the tested engine.');

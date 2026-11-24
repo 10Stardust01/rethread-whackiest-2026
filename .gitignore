@@ -1,0 +1,9 @@
+data/
+node_modules/
+.env
+.env.*
+*.tmp
+*.lock
+.venv/
+__pycache__/
+work/
